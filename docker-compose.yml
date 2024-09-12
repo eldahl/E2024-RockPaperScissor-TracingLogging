@@ -1,6 +1,4 @@
-﻿
-
-services:
+﻿services:
   seq:
     image: datalust/seq
     ports:

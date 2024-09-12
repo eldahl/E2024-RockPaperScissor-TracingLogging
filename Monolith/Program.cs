@@ -12,17 +12,13 @@ using Serilog.Enrichers.Span;
 public class Program
 {
     public static readonly string ServiceName = "RockPaperScissor";
-    public static TracerProvider TracerProvider;
+    public static TracerProvider? TracerProvider;
     public static ActivitySource ActivitySource = new ActivitySource(ServiceName);
     
-    public static ILogger Logger1 => Serilog.Log.Logger;
+    public static ILogger Log => Serilog.Log.Logger;
     
     public static void Main()
     {
-        
-        
-        
-        
         TracerProvider = Sdk.CreateTracerProviderBuilder()
             .AddConsoleExporter()
             .AddZipkinExporter()
@@ -37,21 +33,17 @@ public class Program
             .Enrich.WithSpan()
             .CreateLogger();
 
-        
-            using var activity = Program.ActivitySource.StartActivity();
-        
+        using var mainActivity = Program.ActivitySource.StartActivity();
         var game = new Game();
         
         for (int i = 0; i < 1000; i++)
         {
-            using var activity2 = Program.ActivitySource.StartActivity("act2: Game nr " + i.ToString());
-            Logger1.Verbose("Game Nr - forloop logger {0}!", i);
+            using var gameActivity = Program.ActivitySource.StartActivity("Game nr.: " + i);
+            Log.Verbose("Game Nr - forloop logger {0}!", i);
             game.Start();
         }
-        
         Console.WriteLine("Finished");
-        Log.CloseAndFlush();
+        Serilog.Log.CloseAndFlush();
         TracerProvider.ForceFlush();
-
     }
 }

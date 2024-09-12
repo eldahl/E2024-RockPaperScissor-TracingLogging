@@ -24,7 +24,7 @@ public class CopyPlayer : IPlayer
             Move = move
         };
         
-        Program.Logger1.Verbose("{0} made the following move: {1}", PlayerId, move );
+        Program.Log.Verbose("{0} made the following move: {1}", PlayerId, move );
         moveActivity.AddTag("Move.", move);
         moveActivity.AddTag("PlayerId", PlayerId);
         

@@ -16,10 +16,8 @@ public class RandomPlayer : IPlayer
             0 => Move.Rock,
             1 => Move.Paper,
             _ => Move.Scissor
-            
-            
         };
-        Program.Logger1.Verbose("{0} made the following move: {1}", PlayerId, move );
+        Program.Log.Verbose("{0} made the following move: {1}", PlayerId, move );
         moveRndPly.AddTag("Move.", move);
         moveRndPly.AddTag("PlayerId", PlayerId);
         return new PlayerMovedEvent
